@@ -180,9 +180,8 @@ html { scroll-behavior: smooth; }
 #rsvp-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
 .field { display: flex; flex-direction: column; gap: 6px; border: 0; margin: 0; padding: 0; min-width: 0; }
 .field > label, .field > legend { padding: 0; font-weight: 700; font-size: 17px; color: var(--navy); }
-.field input[type="text"], .field select, .field textarea { width: 100%; font-family: var(--text); font-size: 16px; color: var(--ink); background: #fff; border: 1.5px solid #e3c9b5; border-radius: 12px; padding: 12px 14px; }
-.field textarea { min-height: 84px; resize: vertical; }
-.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; }
+.field input[type="text"] { width: 100%; font-family: var(--text); font-size: 16px; color: var(--ink); background: #fff; border: 1.5px solid #e3c9b5; border-radius: 12px; padding: 12px 14px; }
+.field input:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; }
 .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
 .choice { position: relative; display: block; cursor: pointer; }
 .choice input { position: absolute; opacity: 0; inset: 0; margin: 0; }
@@ -345,10 +344,6 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
             <label class="choice"><input type="radio" id="rsvp-no" name="attend" value="No"><span>Sorry, I can’t make it</span></label>
           </div>
         </fieldset>
-        <div class="field">
-          <label for="rsvp-note">Note for the hosts (optional)</label>
-          <textarea id="rsvp-note"></textarea>
-        </div>
         <p id="rsvp-error" role="alert" hidden></p>
         <button class="btn" id="rsvp-send" type="submit">Send my RSVP</button>
       </form>
@@ -507,7 +502,6 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
     var body = new URLSearchParams();
     body.set('entry.122416638', name);
     body.set('entry.568218989', yes.checked ? 'Yes' : 'No');
-    body.set('entry.249069159', document.getElementById('rsvp-note').value.trim());
     fetch(FORM + 'formResponse', { method: 'POST', mode: 'no-cors', body: body }).then(function () {
       document.getElementById('rsvp-done-title').textContent = yes.checked ? 'You’re on the list, ' + name + '!' : 'Thank you for letting us know, ' + name + '.';
       document.getElementById('rsvp-done-text').textContent = yes.checked ? 'See you on Thursday, November 26 at 2:00 PM. Remember, it’s a surprise!' : 'We’ll miss you. Please keep the surprise a secret!';
