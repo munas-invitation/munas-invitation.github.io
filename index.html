@@ -345,10 +345,6 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
             <label class="choice"><input type="radio" id="rsvp-no" name="attend" value="No"><span>Sorry, I can’t make it</span></label>
           </div>
         </fieldset>
-        <div class="field" id="rsvp-count-field" hidden>
-          <label for="rsvp-count">How many people are coming, including you?</label>
-          <select id="rsvp-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-        </div>
         <div class="field">
           <label for="rsvp-note">Note for the hosts (optional)</label>
           <textarea id="rsvp-note"></textarea>
@@ -500,9 +496,7 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
 
   var FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfiXgYUq1jjBjLDwWmbEs6wXe5fL4yMQQxoX7zdVJ1kog9tCQ/';
   var form = document.getElementById('rsvp-form'), err = document.getElementById('rsvp-error'), send = document.getElementById('rsvp-send');
-  var yes = document.getElementById('rsvp-yes'), no = document.getElementById('rsvp-no'), countField = document.getElementById('rsvp-count-field');
-  function syncCount() { countField.hidden = !yes.checked; }
-  yes.addEventListener('change', syncCount); no.addEventListener('change', syncCount);
+  var yes = document.getElementById('rsvp-yes'), no = document.getElementById('rsvp-no');
   function fail(msg) { err.textContent = msg; err.hidden = false; }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -513,7 +507,6 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
     var body = new URLSearchParams();
     body.set('entry.122416638', name);
     body.set('entry.568218989', yes.checked ? 'Yes' : 'No');
-    if (yes.checked) body.set('entry.778048179', document.getElementById('rsvp-count').value);
     body.set('entry.249069159', document.getElementById('rsvp-note').value.trim());
     fetch(FORM + 'formResponse', { method: 'POST', mode: 'no-cors', body: body }).then(function () {
       document.getElementById('rsvp-done-title').textContent = yes.checked ? 'You’re on the list, ' + name + '!' : 'Thank you for letting us know, ' + name + '.';
